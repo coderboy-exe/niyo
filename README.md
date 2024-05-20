@@ -3,6 +3,10 @@
 
 Niyo Task Manager repository.
 
+## Requirements
+- Node v18+
+- PosgreSQL
+
 ## Installation
 Install all the required dependencies
 ```bash
