@@ -3,14 +3,20 @@ import { DatabaseService } from 'src/database/database.service';
 import { generateToken, hashPassword } from '../utils/helpers';
 import { CreateUserDto, UpdateUserDto } from './constants';
 import { User } from '@prisma/client';
-import { exception, ServiceResponse, success } from 'src/utils/serviceResponse';
+import { badRequest, exception, ServiceResponse, success } from 'src/utils/serviceResponse';
 
 @Injectable()
 export class UsersService {
     constructor(private _dbService: DatabaseService) { }
 
     async createUser(createUserDto: CreateUserDto): Promise<ServiceResponse> {
+        /** Creates a user and hashes their password */
        try {
+            const existingUser = await this.findByEmail(createUserDto.email)
+            if (existingUser) {
+                return badRequest("A user with this email exists")
+            }
+
            const hashed = await hashPassword(createUserDto.password)
            const resetToken = await generateToken();
            const activationToken = (await generateToken()).substring(0, 6)
@@ -31,6 +37,7 @@ export class UsersService {
     }
 
     async findAll(param?: string): Promise<ServiceResponse> {
+        /** Gets all users witout any filter criteria */
         try {
             return success(await this._dbService.user.findMany());
         } catch (e) {
@@ -39,6 +46,7 @@ export class UsersService {
     }
 
     async findById(id: number): Promise<ServiceResponse> {
+        /** Finds a user by teir ID */
         try {
             return success(await this._dbService.user.findUnique({
                 where: {
@@ -51,6 +59,7 @@ export class UsersService {
     }
 
     async findByEmail(email: string): Promise<ServiceResponse> {
+        /** Finds a user by their Email */
         try {
             return success(await this._dbService.user.findUnique({
                 where: {
@@ -63,6 +72,7 @@ export class UsersService {
     }
 
     async update(id: number, updateUserDto: UpdateUserDto): Promise<ServiceResponse> {
+        /** Updates a user */
         try {
             return success(await this._dbService.user.update({
                 where: {
@@ -76,6 +86,7 @@ export class UsersService {
     }
 
     async remove(id: number): Promise<ServiceResponse> {
+        /** delete a user */
         try {
             return success(await this._dbService.user.delete({
                 where: {

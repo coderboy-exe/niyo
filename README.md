@@ -4,7 +4,7 @@
 Niyo Task Manager repository.
 
 ## Installation
-
+Install all the required dependencies
 ```bash
 $ npm install
 ```
@@ -27,27 +27,26 @@ $ npx prisma migrate dev --name your_migration_name
 ## Running the app
 
 ```bash
-# development
+# development (port 3000)
 $ npm run start
 
-# watch mode
+# watch mode (port 3000)
 $ npm run start:dev
 
 # production mode
 $ npm run start:prod
 ```
+Starts the application at http://localhost:3000/
+
+## Documentation
+Check out the swagger documentation at: http://localhost:3000/swagger
 
 ## Test
-
+Run the unit tests
 ```bash
 # unit tests
 $ npm run test
 
-# e2e tests
-$ npm run test:e2e
-
-# test coverage
-$ npm run test:cov
 ```
 
 

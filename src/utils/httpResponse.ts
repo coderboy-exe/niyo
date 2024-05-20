@@ -26,6 +26,7 @@ const responseCodes = {
   }
   
     export function mapErrorCodeToHttpResponse(errorCode: number, message: any): CustomHttpResponse {
+      /** Maps the service error codes into their respective custom status codes and messages */
       switch (errorCode) {
         case errorCodes.SUCCESS:
           return {
