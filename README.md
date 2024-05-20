@@ -4,7 +4,7 @@
 Niyo Task Manager repository.
 
 ## Requirements
-- Node v18+
+- Node v16+
 - PosgreSQL
 
 ## Installation
